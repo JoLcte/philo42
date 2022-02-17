@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoui.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/14 15:36:19 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/02/14 15:39:08 by jlecomte         ###   ########.fr       */
+/*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
+/*   Updated: 2022/02/17 18:16:00 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "parsing.h"
+#include "philo.h"
 
-int	ft_atoui(char const *str)
+int	main(int ac, char **av)
 {
-	long long	n;
-	unsigned char	c;
+	int	setup[5];
 
-	while (*str == ' ' || 
+	if (parse(ac - 1, av + 1, setup))
+		return (1);
+	printf("Parsing : SUCCESS\n");
+	for (int i = 0; i < 5 ; i++)
+	{ printf("setup[%d] = %d\n", i, setup[i]); }
+	return (0);
+
 }
