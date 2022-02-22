@@ -1,0 +1,6 @@
+# ignore all objects files
+*.o
+obj/
+
+# ignore binary
+philo

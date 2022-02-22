@@ -19,8 +19,5 @@ int	main(int ac, char **av)
 	if (parse(ac - 1, av + 1, setup))
 		return (1);
 	printf("Parsing : SUCCESS\n");
-	for (int i = 0; i < 5 ; i++)
-	{ printf("setup[%d] = %d\n", i, setup[i]); }
 	return (0);
-
 }

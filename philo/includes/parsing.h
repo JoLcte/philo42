@@ -23,7 +23,8 @@
 
 # define WRONG_VAL "Error: wrong value. Arguments must be positive numbers.\n"
 # define TOO_BIG "Error: too big value. Arguments must be lower than INTMAX.\n"
-# define WRONG_SETUP "Error: try [nb_philo][die_time][eat_time][sleep_time][nb_meals]\n"
+# define WRONG_SETUP "Error: try [nb_philo][die_time][eat_time][sleep_time]\
+[nb_meals]\n"
 
 int	parse(int nb_args, char **args, int *setup);
 

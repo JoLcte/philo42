@@ -20,7 +20,7 @@ static int	print_error(char const *msg, int size)
 
 static int	fake_atoui(char const *str)
 {
-	long long	n;
+	long long		n;
 	unsigned char	c;
 
 	n = 0;
@@ -31,7 +31,7 @@ static int	fake_atoui(char const *str)
 	str += (*str == '+');
 	while (*str)
 	{
-		c = (unsigned)*str++ -'0';
+		c = (unsigned)*str++ - '0';
 		if (c > 9)
 			return (print_error(WRONG_VAL, 56));
 		if (n > INT32_MAX)
@@ -66,9 +66,9 @@ static int	get_setup(int *setup, char **args)
 
 int	parse(int nb_args, char **args, int *setup)
 {
-	if (nb_args < 4 || nb_args > 5) 
+	if (nb_args < 4 || nb_args > 5)
 		return (print_error(WRONG_SETUP, 64));
-	if (get_setup(setup, args)
+	if (get_setup(setup, args))
 		return (1);
 	return (0);
 }
