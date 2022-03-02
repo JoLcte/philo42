@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/02 17:42:49 by jlecomte         ###   ########.fr       */
+/*   Created: 2022/03/02 15:08:05 by jlecomte          #+#    #+#             */
+/*   Updated: 2022/03/02 15:14:38 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "parsing.h"
 #include "philo.h"
 
-
-int	main(int ac, char **av)
+void	print_setup(int	*setup, int size)
 {
-	t_frame	frame;
+	int	i;
 
-	if (parse(ac - 1, av + 1, frame.setup))
-		return (1);
-	print_setup(frame.setup, 5);
-	if (init_data(frame)
-		return (1);
-//	send threads in functions
-//	check somewhere when to stop
-//	destroy everything
-	return (0);
+	i = 0;
+	printf("-----	PARSING SETUP	-------\n");
+	while (i < size)
+	{
+		printf("setup[%d] = %d\n", i , setup[i]);
+		++i;
+	}
+	printf("-----	PARSING SUCCESS	-------\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:31:36 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/02/17 18:23:23 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/02/24 16:26:21 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	fake_atoui(char const *str)
 			return (print_error(TOO_BIG, 59));
 		n = (n << 1) + (n << 3) + c;
 	}
+	if (!n)
+		return (print_error(NO_ZERO, 53)); 
 	return ((int)n);
 }
 
@@ -49,14 +51,14 @@ static int	get_setup(int *setup, char **args)
 	while (i < 4)
 	{
 		setup[i] = fake_atoui(args[i]);
-		if (setup[i] < 0)
+		if (setup[i] <= 0)
 			return (1);
 		++i;
 	}
 	if (args[i])
 	{
 		setup[i] = fake_atoui(args[i]);
-		if (setup[i] < 0)
+		if (setup[i] <= 0)
 			return (1);
 	}
 	else

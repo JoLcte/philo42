@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/02 17:42:49 by jlecomte         ###   ########.fr       */
+/*   Created: 2022/03/02 16:43:27 by jlecomte          #+#    #+#             */
+/*   Updated: 2022/03/02 17:07:17 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parsing.h"
+
 #include "philo.h"
 
-
-int	main(int ac, char **av)
+int	error_exit(t_frame *frame, const char *s)
 {
-	t_frame	frame;
+	int	i;
 
-	if (parse(ac - 1, av + 1, frame.setup))
-		return (1);
-	print_setup(frame.setup, 5);
-	if (init_data(frame)
-		return (1);
-//	send threads in functions
-//	check somewhere when to stop
-//	destroy everything
-	return (0);
+	i = 0;
+	printf("%s", s);
+	if (frame->forks)
+	{
+		while (i < frame->setup[NB_PHILO])
+			pthread_mutex_destroy(frame->forks[i++];
+		free(frame->forks);
+	}
+	if (frame->philo_thread)
+		free(frame->philo_thread);
+	if (frame->philos)
+		free(frame->philos);
+	return (1);
 }

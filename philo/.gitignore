@@ -4,3 +4,6 @@ obj/
 
 # ignore binary
 philo
+
+# ignore test files
+test/
