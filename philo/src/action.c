@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/02 19:40:27 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:49:49 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	*routine(void	*data)
 	return (NULL);
 }
 
+/* Is returning the dead thread a good idea ?*/
 void	thread_actions(t_frame *frame)
 {
 	const int	nb_philo = frame->setup[NB_PHILO];
