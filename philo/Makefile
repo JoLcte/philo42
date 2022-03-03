@@ -6,7 +6,7 @@
 #    By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:33:43 by jlecomte          #+#    #+#              #
-#    Updated: 2022/03/02 19:48:02 by jlecomte         ###   ########.fr        #
+#    Updated: 2022/03/03 17:17:17 by jlecomte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRC :=	$(SRC_DIR)/action.c \
 	$(SRC_DIR)/exit.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/parse.c \
+	$(SRC_DIR)/thread_handle.c \
+	$(SRC_DIR)/utils.c \
 	$(SRC_DIR)/main.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

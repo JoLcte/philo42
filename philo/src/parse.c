@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:31:36 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/02/24 16:26:21 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/03 18:28:23 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ static int	fake_atoui(char const *str)
 	while (*str == ' ' || (unsigned)*str - '\t' < 5)
 		++str;
 	if (*str == '-')
-		return (print_error(WRONG_VAL, 56));
+		return (print_error(WRONG_VAL, 72));
 	str += (*str == '+');
 	while (*str)
 	{
 		c = (unsigned)*str++ - '0';
 		if (c > 9)
-			return (print_error(WRONG_VAL, 56));
+			return (print_error(WRONG_VAL, 72));
 		if (n > INT32_MAX)
-			return (print_error(TOO_BIG, 59));
+			return (print_error(TOO_BIG, 76));
 		n = (n << 1) + (n << 3) + c;
 	}
 	if (!n)
-		return (print_error(NO_ZERO, 53)); 
+		return (print_error(NO_ZERO, 68)); 
 	return ((int)n);
 }
 
@@ -69,7 +69,7 @@ static int	get_setup(int *setup, char **args)
 int	parse(int nb_args, char **args, int *setup)
 {
 	if (nb_args < 4 || nb_args > 5)
-		return (print_error(WRONG_SETUP, 64));
+		return (print_error(WRONG_SETUP, 88));
 	if (get_setup(setup, args))
 		return (1);
 	return (0);

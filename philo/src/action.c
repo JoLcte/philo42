@@ -5,44 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/02 19:49:49 by jlecomte         ###   ########.fr       */
+/*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
+/*   Updated: 2022/03/03 17:27:25 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*routine(void	*data)
+void    eat_with_forks(t_frame * frame, t_philo *philo)
 {
-	const t_frame *frame = (t_frame *)data;
-	const t_philo *philo = &philo[frame->i];
-//	int	stop;
-	
-//	stop = (philo->is_dead || philo->nb_meals == frame->setup[MEALS]);
-	frame->start = _get_time();
-	philo->last_ate = frame->start;
-	while (1)
-	{
-		if (eat_with_forks(frame))
-			return (philo_thread[frame->i]);
-		sleep_and_think(frame);
-	}
-	return (NULL);
+	(void)frame;
+	(void)philo;
+	return ;
 }
 
-/* Is returning the dead thread a good idea ?*/
-void	thread_actions(t_frame *frame)
+void    sleep_and_think(t_frame *frame, t_philo *philo)
 {
-	const int	nb_philo = frame->setup[NB_PHILO];
-	pthread_t	dead_thread;
-	int	i;
+        const unsigned int      color = frame->palette[philo->id % 36];
+        long int        now;
 
-	i = 0;
-	while (i < nb_philo)
-	{
-		frame->i = i;
-		dead_thread = pthread_create(&frame->philo_thread[i], NULL, \
-			 routine, (void *)frame);
-		++i;
-	}
+        now = _get_time();
+        if (frame->stop || (philo->nb_meals == frame->setup[MEALS]))
+                return ;
+        pthread_mutex_lock(frame->print);
+        printf(PHILO_SLEEPS, color, now - frame->start, philo->id);
+        pthread_mutex_unlock(frame->print);
+        sleep(frame->setup[SLEEP]);
+        now = _get_time();
+        if (now - philo->last_ate >= frame->setup[DIE])
+        {
+                pthread_mutex_lock(frame->print);
+                printf(PHILO_DIED, color, now - frame->start, philo->id);
+                frame->stop = 1;
+                pthread_mutex_unlock(frame->print);
+                return ;
+        }
+	now = _get_time();
+        pthread_mutex_lock(frame->print);
+        printf(PHILO_THINKS, color, now - frame->start, philo->id);
+        pthread_mutex_unlock(frame->print);
 }
