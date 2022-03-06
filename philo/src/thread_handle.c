@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/03 17:44:05 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:03:31 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 static void	*count_meals_routine(void *data)
 {
-	t_frame * const frame = (t_frame *)data;
-	t_philo * const philo = &frame->philo[frame->i];
-
-	frame->start = _get_time();
+	t_frame *frame;
+	t_philo *philo;
+	
+	frame = (t_frame *)data;
+	philo = &frame->philo[frame->i];
+	pthread_mutex_unlock(frame->mutex_i);
 	philo->last_ate = frame->start;
 	while (!frame->stop && (philo->nb_meals < frame->setup[MEALS]))
 	{
@@ -30,11 +32,13 @@ static void	*count_meals_routine(void *data)
 
 static void	*routine(void *data)
 {
-	t_frame * const frame = (t_frame *)data;
-	t_philo * const philo = &frame->philo[frame->i];
+	t_frame *frame;
+	t_philo *philo;
 	
-	frame->start = _get_time();
-	philo->last_ate = frame->start;
+	frame = (t_frame *)data;
+	philo = &frame->philo[frame->i];
+	pthread_mutex_unlock(frame->mutex_i);
+	philo->last_ate = _get_time();
 	while (!frame->stop)
 	{
 		eat_with_forks(frame, philo);
@@ -43,18 +47,18 @@ static void	*routine(void *data)
 	return (NULL);
 }
 
-
-
 void	thread_actions(t_frame *frame)
 {
 	const unsigned int	nb_philo = frame->setup[NB_PHILO];
 	unsigned int			i;
 
 	i = 0;
+	frame->start = _get_time();
 	if (frame->setup[MEALS] > 0)
 	{
 		while (i < nb_philo)
 		{
+			pthread_mutex_lock(frame->mutex_i);
 			frame->i = i;
 			pthread_create(&frame->philo_thread[i], \
 				 NULL, count_meals_routine, (void *)frame);
@@ -62,12 +66,13 @@ void	thread_actions(t_frame *frame)
 		}
 		if (frame->stop)
 			return ;
-			// do something to stop everything
+			// do something to clean everything
 	}
 	else
 	{
 		while (i < nb_philo)
 		{
+			pthread_mutex_lock(frame->mutex_i);
 			frame->i = i;
 			pthread_create(&frame->philo_thread[i], \
 				 NULL, routine, (void *)frame);

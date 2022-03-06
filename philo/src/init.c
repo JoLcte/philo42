@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/03 18:44:49 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:42:54 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ static int	init_mutex(t_frame *frame)
 	const int	nb_philo = frame->setup[NB_PHILO];
 	int			i;
 
+	frame->mutex_i = malloc(sizeof(pthread_mutex_t));
+	if (!frame->mutex_i)
+		return (error_exit(frame, MALLOC_ERR));
 	frame->print = malloc(sizeof(pthread_mutex_t));
 	if (!frame->print)
 		return (error_exit(frame, MALLOC_ERR));
@@ -96,6 +99,7 @@ int	init_data(t_frame *frame)
 {
 	const int		nb_philo = frame->setup[NB_PHILO];
 	
+	printf("nb_philo ds init_data = %d\n", nb_philo);
 	frame->philo_thread = malloc(sizeof(pthread_t) * nb_philo);
 	if (!frame->philo_thread)
 		return (error_exit(frame, MALLOC_ERR));
@@ -105,6 +109,7 @@ int	init_data(t_frame *frame)
 	if (init_mutex(frame))
 		return (1);
 	frame->i = 0;
+	frame->start = 0;
 	frame->stop = 0;
 	fill_colors(frame->palette, 36);
 	init_philos(frame, frame->philo, nb_philo);

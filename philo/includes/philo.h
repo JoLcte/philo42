@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/03 18:28:51 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:46:50 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct	s_philo
 {
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	time_t		last_ate;
+	long int		last_ate;
 	unsigned int	id;
 	int	nb_meals;
 }		t_philo;
@@ -56,8 +56,9 @@ typedef struct	s_frame
 	pthread_mutex_t	*print;
 	pthread_t	*philo_thread;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t *mutex_i;
 	t_philo		*philo;
-	time_t		start;
+	long int		start;
 	int		setup[5];
 	int		palette[36];
 	int		i;
@@ -85,6 +86,7 @@ int	error_exit(t_frame *frame, const char *s);
 */
 
 void	print_setup(int *setup, int size);
-
+void	print_philos(t_frame *frame, t_philo *philo, int nb_philo);
+void	print_frame(t_frame *frame);
 
 #endif
