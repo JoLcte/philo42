@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/04 19:03:31 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:28:14 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	thread_actions(t_frame *frame)
 		{
 			pthread_mutex_lock(frame->mutex_i);
 			frame->i = i;
+			if (i % 2 == 0)
+				usleep(20000);
 			pthread_create(&frame->philo_thread[i], \
 				 NULL, routine, (void *)frame);
 			++i;
