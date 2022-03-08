@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/08 14:49:11 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:24:02 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void    sleep_and_think(t_frame *frame, t_philo *philo)
         const unsigned int      color = frame->palette[philo->id % 36];
         long int		now;
 
-	printf("color = %u\n", color);
         if (frame->stop || (philo->nb_meals == frame->setup[MEALS]))
                 return ;
         now = _get_time();

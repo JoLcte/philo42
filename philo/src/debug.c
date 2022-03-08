@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:08:05 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/04 18:21:09 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:23:25 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,17 @@ void	print_frame(t_frame *frame)
 	printf("->Frame->forks last : forks[%d]\n", i);*/
 	printf("->start time = %ld\n", frame->start);
 	printf("-----   FRAME COMPLETED   ------\n\n");
+}
+
+void	print_colors(t_frame *frame)
+{
+	int i;
+
+	i = 0;
+	printf("----   PRINT PALETTE   ----\n");
+	printf("Colors = [%d]", frame->palette[i]);
+	while (++i < 35)
+		printf("[%d]", frame->palette[i]);
+	printf("[%d]\n", frame->palette[i]);
+	printf("----   COLORS PALETTE OK   ----\n\n");
 }

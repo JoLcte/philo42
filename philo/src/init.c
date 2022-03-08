@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/04 18:42:54 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:29:21 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,22 @@ static void	fill_colors(int *arr, int size)
         int start;
         int j;
 
-        if (size < 36)
+        if (size != 36)
+	{
                 printf("Colors array could not be filled\n");
+		return;
+	}
         i = -1;
         j = 0;
         start = 34;
         while (j < 6)
         {
-                start += j;
+		i = -1;
                 while (++i < 6)
                         arr[i] = start + i;
                 ++j;
+                start += 36;
+		arr += i;
         }
 }
 
@@ -65,8 +70,8 @@ static void	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
 	philo[i].id = i + 1;
 	philo[i].nb_meals = 0;
 	philo[i].last_ate = 0;
-	philo[i].l_fork = &frame->forks[0];
-	philo[i].r_fork = &frame->forks[i];
+	philo[i].l_fork = &frame->forks[i];
+	philo[i].r_fork = &frame->forks[0];
 }
 
 static int	init_mutex(t_frame *frame)
@@ -99,7 +104,6 @@ int	init_data(t_frame *frame)
 {
 	const int		nb_philo = frame->setup[NB_PHILO];
 	
-	printf("nb_philo ds init_data = %d\n", nb_philo);
 	frame->philo_thread = malloc(sizeof(pthread_t) * nb_philo);
 	if (!frame->philo_thread)
 		return (error_exit(frame, MALLOC_ERR));
