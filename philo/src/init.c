@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/08 15:29:21 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:45:05 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static int	init_mutex(t_frame *frame)
 	if (!frame->forks)
 		return (error_exit(frame, MALLOC_ERR));
 	if (pthread_mutex_init(frame->print, NULL))
+		return (error_exit(frame, MUTEX_ERR));
+	if (pthread_mutex_init(frame->mutex_i, NULL))
 		return (error_exit(frame, MUTEX_ERR));
 	i = 0;
 	while (i < nb_philo)
