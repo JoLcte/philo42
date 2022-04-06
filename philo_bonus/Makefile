@@ -17,7 +17,7 @@ INC = includes
 CC = gcc
 CFLAGS = -Werror -Wall -Wextra -I$(INC)
 
-LIBS =
+LIBS = -lpthread
 
 SRC_DIR = src
 OBJ_DIR = obj
