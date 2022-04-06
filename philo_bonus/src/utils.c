@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/05 15:12:08 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:41:20 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,11 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 		sem_post(frame->print);
 }
 
-void    ft_sleep(t_frame *frame, long int ms)
+void    ft_sleep(long int ms)
 {
 	long int	now;
-	long int	time_wtf;
-
-	time_wtf = (long int)(1000 * frame->setup[NB_PHILO] * 0.005);
-	if ( time_wtf > 5000)
-		time_wtf = 5000;
 
 	now = _get_time();
 	while (_get_time() < now + ms)
-		usleep(time_wtf);
+		usleep(ms);
 }

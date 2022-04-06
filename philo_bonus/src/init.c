@@ -6,19 +6,20 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/17 01:19:35 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:48:04 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	init_philos(t_philo *philo, int nb_philo)
+static void	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_philo)
 	{
+		philo[i].frame = frame;
 		philo[i].id = i + 1;
 		philo[i].nb_meals = 0;
 		philo[i].last_ate = _get_time();
@@ -65,7 +66,7 @@ int	init_data(t_frame *frame)
 	frame->check_meals = 0;
 	if (init_sem(frame))
 		return (error_exit(frame, SEM_ERR));
-	init_philos(frame->philo, nb_philo);
+	init_philos(frame, frame->philo, nb_philo);
 	fill_colors(frame->palette, 36);
 	frame->start = 0;
 	frame->dead = 0;

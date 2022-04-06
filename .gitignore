@@ -1,0 +1,5 @@
+#obj files
+obj/
+
+#binaries
+philo

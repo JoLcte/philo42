@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/05 15:40:03 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:48:29 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	clean_all(t_frame *frame)
 		while (i < frame->setup[NB_PHILO])
 			kill(frame->philo[i++].pid, SIGKILL);
 	}
-	ft_sleep(frame, 100);
+	usleep(100000);
 	free(frame->philo);
 	sem_close(frame->forks);
 	sem_close(frame->stop);
@@ -66,10 +66,11 @@ static void	launch_meals_routine(t_frame *frame)
 		frame->philo[i].pid = fork();
 		if (fork_err(frame, i))
 			return ;
-		ft_sleep(frame, 100);
 		if (frame->philo[i].pid == 0)
 		{
 			frame->philo[i].last_ate = _get_time();
+			if (frame->philo[i].id % 2 == 0)
+				ft_sleep(3 * frame->setup[EAT] / 2);
 			pthread_create(&frame->check_death, NULL, \
 					check_death, (void *)frame);
 			pthread_detach(frame->check_death);
@@ -93,13 +94,13 @@ static void	launch_routine(t_frame *frame)
 		frame->philo[i].pid = fork();
 		if (fork_err(frame, i))
 			return ;
-		if (i % 2 != 0)
-			ft_sleep(frame, frame->setup[DIE] / 2);
 		if (frame->philo[i].pid == 0)
 		{
 			frame->philo[i].last_ate = _get_time();
+			if (frame->philo[i].id % 2 == 0)
+				ft_sleep(3 * frame->setup[EAT] / 2);
 			pthread_create(&frame->check_death, NULL, \
-					check_death, (void *)frame);
+					check_death, (void *)&frame->philo[i]);
 			pthread_detach(frame->check_death);
 			routine(frame, &frame->philo[i]);
 		}

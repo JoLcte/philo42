@@ -6,7 +6,7 @@
 #    By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:33:43 by jlecomte          #+#    #+#              #
-#    Updated: 2022/03/15 19:33:29 by jlecomte         ###   ########.fr        #
+#    Updated: 2022/04/06 17:40:45 by jlecomte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INC = includes
 CC = gcc
 CFLAGS = -Werror -Wall -Wextra -I$(INC)
 
-LIBS = -lpthread 
+LIBS =
 
 SRC_DIR = src
 OBJ_DIR = obj

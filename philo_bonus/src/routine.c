@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_handle.c                                    :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/17 01:45:49 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:46:26 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*check_death(void *data)
 	t_philo		*philo;
 	long int	now;
 
-	frame = (t_frame *)data;
-	philo = &frame->philo[frame->i];
+	philo = (t_philo *)data;
+	frame = philo->frame;
 	while (1)
 	{
 		now = _get_time();

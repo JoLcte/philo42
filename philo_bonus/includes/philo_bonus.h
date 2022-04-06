@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/05 15:14:28 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:46:58 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_frame	t_frame;
 typedef struct s_philo
 {
 	pid_t			pid;
+	t_frame			*frame;
 	long int		last_ate;
 	unsigned int	id;
 	int				nb_meals;
@@ -93,7 +94,7 @@ void		sleep_and_think(t_frame *frame, t_philo *philo);
 long int	_get_time(void);
 void		fill_colors(int *arr, int size);
 void		print_info(t_frame *frame, int id, char *msg, int dead);
-void		ft_sleep(t_frame *frame, long int ms);
+void		ft_sleep(long int ms);
 
 /*
 **	--- DEBUG ---
