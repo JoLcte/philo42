@@ -6,43 +6,81 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/08 14:28:14 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:46:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*count_meals_routine(void *data)
+static int	check_meals(t_frame *frame, t_philo *philo)
 {
-	t_frame *frame;
-	t_philo *philo;
-	
-	frame = (t_frame *)data;
-	philo = &frame->philo[frame->i];
-	pthread_mutex_unlock(frame->mutex_i);
-	philo->last_ate = frame->start;
-	while (!frame->stop && (philo->nb_meals < frame->setup[MEALS]))
+	if (philo->nb_meals == frame->setup[MEALS])
+	{
+		pthread_mutex_lock(frame->dead);
+		++frame->philos_full;
+		if (frame->philos_full == frame->setup[NB_PHILO])
+			frame->stop = 1;
+		pthread_mutex_unlock(frame->dead);
+		return (1);
+	}
+	return (0);
+}
+
+static int	stop_all(t_frame *frame)
+{
+	pthread_mutex_lock(frame->dead);
+	if (frame->stop)
+	{
+		pthread_mutex_unlock(frame->dead);
+		return (1);
+	}
+	pthread_mutex_unlock(frame->dead);
+	return (0);
+}
+
+static void	*meals_routine(void *data)
+{
+	t_philo	*philo;
+	t_frame	*frame;
+
+	philo = (t_philo *)data;
+	frame = philo->frame;
+	if (philo->id % 2 == 0)
+		ft_sleep(frame, frame->setup[EAT] / 2);
+	while (1)
 	{
 		eat_with_forks(frame, philo);
+		if (stop_all(frame))
+			break ;
 		++philo->nb_meals;
+		if (check_meals(frame, philo))
+			break ;
+		if (stop_all(frame))
+			break ;
 		sleep_and_think(frame, philo);
+		if (stop_all(frame))
+			break ;
 	}
 	return (NULL);
 }
 
 static void	*routine(void *data)
 {
-	t_frame *frame;
-	t_philo *philo;
-	
-	frame = (t_frame *)data;
-	philo = &frame->philo[frame->i];
-	pthread_mutex_unlock(frame->mutex_i);
-	philo->last_ate = _get_time();
-	while (!frame->stop)
+	t_philo	*philo;
+	t_frame	*frame;
+
+	philo = (t_philo *)data;
+	frame = philo->frame;
+	if (philo->id % 2 == 0)
+		ft_sleep(frame, frame->setup[EAT] / 2);
+	while (1)
 	{
 		eat_with_forks(frame, philo);
+		if (stop_all(frame))
+			break ;
 		sleep_and_think(frame, philo);
+		if (stop_all(frame))
+			break ;
 	}
 	return (NULL);
 }
@@ -50,7 +88,7 @@ static void	*routine(void *data)
 void	thread_actions(t_frame *frame)
 {
 	const unsigned int	nb_philo = frame->setup[NB_PHILO];
-	unsigned int			i;
+	unsigned int		i;
 
 	i = 0;
 	frame->start = _get_time();
@@ -58,29 +96,18 @@ void	thread_actions(t_frame *frame)
 	{
 		while (i < nb_philo)
 		{
-			pthread_mutex_lock(frame->mutex_i);
-			frame->i = i;
-			pthread_create(&frame->philo_thread[i], \
-				 NULL, count_meals_routine, (void *)frame);
+			pthread_create(&frame->philo[i].thd, \
+				NULL, meals_routine, (void *)&frame->philo[i]);
 			++i;
 		}
-		if (frame->stop)
-			return ;
-			// do something to clean everything
 	}
 	else
 	{
 		while (i < nb_philo)
 		{
-			pthread_mutex_lock(frame->mutex_i);
-			frame->i = i;
-			if (i % 2 == 0)
-				usleep(20000);
-			pthread_create(&frame->philo_thread[i], \
-				 NULL, routine, (void *)frame);
+			pthread_create(&frame->philo[i].thd, \
+				NULL, routine, (void *)&frame->philo[i]);
 			++i;
 		}
-		if (frame->stop)
-			return ;
 	}
 }

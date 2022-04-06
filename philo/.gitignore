@@ -6,5 +6,6 @@ obj/
 philo
 
 # ignore test files
-# test/
-
+test/
+../other_philos/
+helgrind

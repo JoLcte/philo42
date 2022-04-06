@@ -6,7 +6,7 @@
 #    By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:33:43 by jlecomte          #+#    #+#              #
-#    Updated: 2022/03/03 17:17:17 by jlecomte         ###   ########.fr        #
+#    Updated: 2022/03/15 19:33:29 by jlecomte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,13 @@ INC = includes
 CC = gcc
 CFLAGS = -Werror -Wall -Wextra -I$(INC)
 
-LIBS = -lpthread
+LIBS = -lpthread 
 
 SRC_DIR = src
 OBJ_DIR = obj
 
 SRC :=	$(SRC_DIR)/action.c \
 	$(SRC_DIR)/debug.c \
-	$(SRC_DIR)/exit.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/parse.c \
 	$(SRC_DIR)/thread_handle.c \

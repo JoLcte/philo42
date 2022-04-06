@@ -6,26 +6,23 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/05 14:43:05 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:12:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	error_exit(t_frame *frame, const char *s)
 {
-	int	i;
-
-	i = 0;
 	printf("%s", s);
-	if (frame->forks)
-	{
-		while (i < frame->setup[NB_PHILO])
-			pthread_mutex_destroy(&frame->forks[i++]);
-		free(frame->forks);
-	}
 	if (frame->philo)
 		free(frame->philo);
+	if (frame->philo_full)
+		sem_close(frame->philo_full);
+	if (frame->stop)
+		sem_close(frame->philo_full);
+	if (frame->forks)
+		sem_close(frame->forks);
 	return (1);
 }
 
@@ -64,18 +61,16 @@ void	fill_colors(int *arr, int size)
 	}
 }
 
-void	print_info(t_frame *frame, int id, long int now, char *msg)
+void	print_info(t_frame *frame, int id, char *msg, int dead)
 {
 	const unsigned int	color = frame->palette[id % 36];
+	long int			now;
 
-	pthread_mutex_lock(frame->print);
-	if (frame->stop)
-	{
-		pthread_mutex_unlock(frame->print);
-		return ;
-	}
+	sem_wait(frame->print);
+	now = _get_time();
 	printf(msg, color, now - frame->start, id);
-	pthread_mutex_unlock(frame->print);
+	if (!dead)
+		sem_post(frame->print);
 }
 
 void    ft_sleep(t_frame *frame, long int ms)

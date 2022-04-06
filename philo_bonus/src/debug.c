@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "philo.h"
+#include "parsing_bonus.h"
+#include "philo_bonus.h"
 
 void	print_setup(int	*setup, int size)
 {
@@ -27,7 +27,7 @@ void	print_setup(int	*setup, int size)
 	printf("-----	PARSING SUCCESS	-------\n\n");
 }
 
-void	print_philos(t_frame *frame, t_philo *philo, int nb_philo)
+/*void	print_philos(t_frame *frame, t_philo *philo, int nb_philo)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ void	print_philos(t_frame *frame, t_philo *philo, int nb_philo)
 	printf("->nb_meals = %d\n", philo[i].nb_meals);
 	printf("->nb_meals = %d\n", philo[i].nb_meals);
 	printf("-----   PHILOS COMPLETED   ------\n\n");
-}
+}*/
 
 void	print_colors(t_frame *frame)
 {
@@ -65,9 +65,9 @@ void	print_colors(t_frame *frame)
 	printf("----   COLORS PALETTE OK   ----\n\n");
 }
 
-void	print_forks(t_frame *frame, const char *s, int n, pthread_mutex_t *fork)
+/*void	print_forks(t_frame *frame, const char *s, int n, pthread_mutex_t *fork)
 {
 	pthread_mutex_lock(frame->print);
 	printf(s, n, fork);
 	pthread_mutex_unlock(frame->print);
-}
+}*/
