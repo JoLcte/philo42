@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 17:46:26 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:02:48 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	*check_meals(void *data)
 	}
 	frame->wait_meals = 1;
 	sem_post(frame->stop);
-	printf(END_MEALS, frame->setup[MEALS]);
 	return (NULL);
 }
 

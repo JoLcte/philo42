@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 17:48:29 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:08:39 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	clean_all(t_frame *frame)
 	{
 		while (i++ < frame->setup[NB_PHILO])
 			waitpid(-1, &status, WUNTRACED);
+		printf(END_MEALS, frame->setup[MEALS]);
+		
 	}
 	else
 	{
@@ -70,9 +72,9 @@ static void	launch_meals_routine(t_frame *frame)
 		{
 			frame->philo[i].last_ate = _get_time();
 			if (frame->philo[i].id % 2 == 0)
-				ft_sleep(3 * frame->setup[EAT] / 2);
+				ft_sleep(frame->setup[EAT] / 2);
 			pthread_create(&frame->check_death, NULL, \
-					check_death, (void *)frame);
+					check_death, (void *)&frame->philo[i]);
 			pthread_detach(frame->check_death);
 			meals_routine(frame, &frame->philo[i]);
 		}
@@ -98,7 +100,7 @@ static void	launch_routine(t_frame *frame)
 		{
 			frame->philo[i].last_ate = _get_time();
 			if (frame->philo[i].id % 2 == 0)
-				ft_sleep(3 * frame->setup[EAT] / 2);
+				ft_sleep(frame->setup[EAT] / 2);
 			pthread_create(&frame->check_death, NULL, \
 					check_death, (void *)&frame->philo[i]);
 			pthread_detach(frame->check_death);
