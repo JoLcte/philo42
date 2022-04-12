@@ -23,7 +23,7 @@ static void	clean_all(t_frame *frame)
 	frame->dead = 1;
 	if (frame->wait_meals)
 	{
-		while (i++ < frame->setup[NB_PHILO])
+		while (++i < frame->setup[NB_PHILO])
 			waitpid(-1, &status, WUNTRACED);
 		printf(END_MEALS, frame->setup[MEALS]);
 		
@@ -33,7 +33,7 @@ static void	clean_all(t_frame *frame)
 		while (i < frame->setup[NB_PHILO])
 			kill(frame->philo[i++].pid, SIGKILL);
 	}
-	usleep(100000);
+	usleep(10000);
 	free(frame->philo);
 	sem_close(frame->forks);
 	sem_close(frame->stop);

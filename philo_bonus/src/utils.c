@@ -65,11 +65,16 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 {
 	const unsigned int	color = frame->palette[id % 36];
 	long int			now;
+	static int		i;
 
+	if (i)
+		return;
 	sem_wait(frame->print);
 	now = _get_time();
 	printf(msg, color, now - frame->start, id);
-	if (!dead)
+	if (dead)
+		++i;
+	else
 		sem_post(frame->print);
 }
 

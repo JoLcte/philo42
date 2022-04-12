@@ -22,6 +22,9 @@ void	*check_death(void *data)
 	frame = philo->frame;
 	while (1)
 	{
+		if (frame->dead)
+			return (NULL);
+		usleep(1000);
 		now = _get_time();
 		if (now - philo->last_ate >= frame->setup[DIE])
 		{
@@ -46,6 +49,7 @@ void	*check_meals(void *data)
 	while (n)
 	{
 		sem_wait(frame->philo_full);
+		usleep(10000);
 		if (frame->dead)
 			return (NULL);
 		n--;
@@ -64,7 +68,7 @@ void	meals_routine(t_frame *frame, t_philo *philo)
 		++philo->nb_meals;
 		sleep_and_think(frame, philo);
 		if (philo->nb_meals == frame->setup[MEALS])
-		{
+		{	
 			sem_post(frame->philo_full);
 			exit(0);
 		}
