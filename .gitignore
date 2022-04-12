@@ -2,4 +2,5 @@
 obj/
 
 #binaries
-philo
+philo/philo
+philo_bonus/philo

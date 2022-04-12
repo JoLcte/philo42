@@ -19,9 +19,13 @@ static int	check_meals(t_frame *frame, t_philo *philo)
 		pthread_mutex_lock(frame->dead);
 		++frame->philos_full;
 		if (frame->philos_full == frame->setup[NB_PHILO])
+		{
 			frame->stop = 1;
+			pthread_mutex_unlock(frame->dead);
+			return (1);
+		}
 		pthread_mutex_unlock(frame->dead);
-		return (1);
+		return (0);
 	}
 	return (0);
 }
