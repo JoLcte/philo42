@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_bonus.h"
 #include "philo_bonus.h"
 
 void	print_setup(int	*setup, int size)

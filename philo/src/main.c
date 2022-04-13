@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
 #include "philo.h"
 
 static void	clean_all(t_frame *frame)

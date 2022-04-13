@@ -24,9 +24,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# ifndef INT32_MAX
+#  define INT32_MAX 2147483647
+# endif
+
 /*
 **	--- DEFINES FOR READABILITY ---
 */
+
+# define WRONG_VAL "\e[48;5;124m \
+Error: wrong value. Arguments must be unsigned integers.\e[m\n"
+# define TOO_BIG "\e[48;5;124m \
+Error: too big value. Arguments must be smaller than INTMAX.\e[m\n"
+# define WRONG_SETUP "\e[48;5;124m \
+Error: try [nb_philo][time_to_die][time_to_eat][time_to_sleep][nb_meals]\e[m\n"
+# define NO_ZERO "\e[48;5;124m \
+Error: null value. Arguments must be greater than 0.\e[m\n"
 
 # define NB_PHILO		0
 # define DIE			1
@@ -85,22 +98,23 @@ typedef struct s_frame
 
 int			error_exit(t_frame *frame, const char *s);
 int			init_data(t_frame *frame);
-void		*check_meals(void *data);
+int			parse(int nb_args, char **args, int *setup);
 void		*check_death(void *data);
-void		meals_routine(t_frame *frame, t_philo *philo);
-void		routine(t_frame *frame, t_philo *philo);
+void		*check_meals(void *data);
 void		eat_with_forks(t_frame *frame, t_philo *philo);
+void		fill_colors(int *arr, int size);
+void		ft_sleep(long int ms);
+void		meals_routine(t_frame *frame, t_philo *philo);
+void		print_info(t_frame *frame, int id, char *msg, int dead);
+void		routine(t_frame *frame, t_philo *philo);
 void		sleep_and_think(t_frame *frame, t_philo *philo);
 long int	_get_time(void);
-void		fill_colors(int *arr, int size);
-void		print_info(t_frame *frame, int id, char *msg, int dead);
-void		ft_sleep(long int ms);
 
 /*
 **	--- DEBUG ---
 */
 
-void		print_setup(int *setup, int size);
+//void		print_setup(int *setup, int size);
 //void		print_philos(t_frame *frame, t_philo *philo, int nb_philo);
 //void		print_frame(t_frame *frame);
 

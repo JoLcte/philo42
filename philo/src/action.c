@@ -26,7 +26,7 @@ static int	dead_sleeping(t_frame *frame, t_philo *philo, long int now)
 	if (alive + frame->setup[SLEEP] >= frame->setup[DIE])
 	{
 		pthread_mutex_unlock(frame->dead);
-		ft_sleep(frame, (frame->setup[DIE] - alive));
+		ft_sleep(frame->setup[DIE] - alive);
 		pthread_mutex_lock(frame->dead);
 		now = _get_time();
 		print_info(frame, philo->id, now, PHILO_DIED);
@@ -51,7 +51,7 @@ static int	dead_eating(t_frame *frame, t_philo *philo, long int now)
 	if (now - philo->last_ate + frame->setup[EAT] >= frame->setup[DIE])
 	{	
 		pthread_mutex_unlock(frame->dead);
-		ft_sleep(frame, frame->setup[DIE]);
+		ft_sleep(frame->setup[DIE]);
 		pthread_mutex_lock(frame->dead);
 		now = _get_time();
 		print_info(frame, philo->id, now, PHILO_DIED);
@@ -117,7 +117,7 @@ void	eat_with_forks(t_frame *frame, t_philo *philo)
 	philo->last_ate = now;
 	if (dead_eating(frame, philo, now))
 		return ;
-	ft_sleep(frame, frame->setup[EAT]);
+	ft_sleep(frame->setup[EAT]);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 }
@@ -130,7 +130,7 @@ void	sleep_and_think(t_frame *frame, t_philo *philo)
 	print_info(frame, philo->id, now, PHILO_SLEEPS);
 	if (dead_sleeping(frame, philo, now))
 		return ;
-	ft_sleep(frame, frame->setup[SLEEP]);
+	ft_sleep(frame->setup[SLEEP]);
 	now = _get_time();
 	print_info(frame, philo->id, now, PHILO_THINKS);
 	if (is_dead(frame, philo, now, 0))

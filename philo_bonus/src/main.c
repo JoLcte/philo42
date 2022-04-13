@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_bonus.h"
 #include "philo_bonus.h"
 
 static void	clean_all(t_frame *frame)
@@ -26,7 +25,6 @@ static void	clean_all(t_frame *frame)
 		while (++i < frame->setup[NB_PHILO])
 			waitpid(-1, &status, WUNTRACED);
 		printf(END_MEALS, frame->setup[MEALS]);
-		
 	}
 	else
 	{
@@ -55,14 +53,13 @@ static int	fork_err(t_frame *frame, int i)
 
 static void	launch_meals_routine(t_frame *frame)
 {
-	const int	nb_philo = frame->setup[NB_PHILO];
-	int			i;	
+	int	i;	
 
-	i = 0;
+	i = -1;
 	frame->start = _get_time();
 	pthread_create(&frame->check_meals, NULL, check_meals, (void *)frame);
 	pthread_detach(frame->check_meals);
-	while (i < nb_philo)
+	while (++i < frame->setup[NB_PHILO])
 	{
 		frame->i = i;
 		frame->philo[i].pid = fork();

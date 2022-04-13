@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "philo.h"
 
 static int	print_error(char const *msg, int size)
 {

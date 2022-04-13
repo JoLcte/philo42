@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_bonus.h"
+#include "philo_bonus.h"
 
 static int	print_error(char const *msg, int size)
 {

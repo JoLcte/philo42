@@ -78,16 +78,11 @@ void	print_info(t_frame *frame, int id, long int now, char *msg)
 	pthread_mutex_unlock(frame->print);
 }
 
-void    ft_sleep(t_frame *frame, long int ms)
+void	ft_sleep(long int ms)
 {
 	long int	now;
-	long int	time_wtf;
-
-	time_wtf = (long int)(1000 * frame->setup[NB_PHILO] * 0.005);
-	if ( time_wtf > 5000)
-		time_wtf = 5000;
 
 	now = _get_time();
 	while (_get_time() < now + ms)
-		usleep(time_wtf);
+		usleep(ms);
 }

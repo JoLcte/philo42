@@ -65,10 +65,10 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 {
 	const unsigned int	color = frame->palette[id % 36];
 	long int			now;
-	static int		i;
+	static int			i;
 
 	if (i)
-		return;
+		return ;
 	sem_wait(frame->print);
 	now = _get_time();
 	printf(msg, color, now - frame->start, id);
@@ -78,7 +78,7 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 		sem_post(frame->print);
 }
 
-void    ft_sleep(long int ms)
+void	ft_sleep(long int ms)
 {
 	long int	now;
 

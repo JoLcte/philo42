@@ -50,7 +50,7 @@ static void	*meals_routine(void *data)
 	philo = (t_philo *)data;
 	frame = philo->frame;
 	if (philo->id % 2 == 0)
-		ft_sleep(frame, frame->setup[EAT] / 2);
+		ft_sleep(frame->setup[EAT] / 2);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
@@ -76,7 +76,7 @@ static void	*routine(void *data)
 	philo = (t_philo *)data;
 	frame = philo->frame;
 	if (philo->id % 2 == 0)
-		ft_sleep(frame, frame->setup[EAT] / 2);
+		ft_sleep(frame->setup[EAT] / 2);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
