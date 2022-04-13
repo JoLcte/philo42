@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	dead_sleeping(t_frame *frame, t_philo *philo, long int now)
+static int	dead_sleeping(t_frame *frame, t_philo *philo)
 {
 	long int	alive;
 
@@ -22,14 +22,13 @@ static int	dead_sleeping(t_frame *frame, t_philo *philo, long int now)
 		pthread_mutex_unlock(frame->dead);
 		return (1);
 	}
-	alive = now - philo->last_ate;
+	alive = _get_time() - philo->last_ate;
 	if (alive + frame->setup[SLEEP] >= frame->setup[DIE])
 	{
 		pthread_mutex_unlock(frame->dead);
 		ft_sleep(frame->setup[DIE] - alive);
 		pthread_mutex_lock(frame->dead);
-		now = _get_time();
-		print_info(frame, philo->id, now, PHILO_DIED);
+		print_info(frame, philo->id, PHILO_DIED);
 		frame->stop = 1;
 		pthread_mutex_unlock(frame->dead);
 		return (1);
@@ -38,7 +37,7 @@ static int	dead_sleeping(t_frame *frame, t_philo *philo, long int now)
 	return (0);
 }
 
-static int	dead_eating(t_frame *frame, t_philo *philo, long int now)
+static int	dead_eating(t_frame *frame, t_philo *philo)
 {
 	pthread_mutex_lock(frame->dead);
 	if (frame->stop == 1)
@@ -48,13 +47,12 @@ static int	dead_eating(t_frame *frame, t_philo *philo, long int now)
 		pthread_mutex_unlock(frame->dead);
 		return (1);
 	}
-	if (now - philo->last_ate + frame->setup[EAT] >= frame->setup[DIE])
+	if (_get_time() - philo->last_ate + frame->setup[EAT] >= frame->setup[DIE])
 	{	
 		pthread_mutex_unlock(frame->dead);
 		ft_sleep(frame->setup[DIE]);
 		pthread_mutex_lock(frame->dead);
-		now = _get_time();
-		print_info(frame, philo->id, now, PHILO_DIED);
+		print_info(frame, philo->id, PHILO_DIED);
 		frame->stop = 1;
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
@@ -65,7 +63,7 @@ static int	dead_eating(t_frame *frame, t_philo *philo, long int now)
 	return (0);
 }
 
-static int	is_dead(t_frame *frame, t_philo *philo, long int now, int lock)
+static int	is_dead(t_frame *frame, t_philo *philo, int lock)
 {	
 	pthread_mutex_lock(frame->dead);
 	if (frame->stop == 1)
@@ -77,10 +75,9 @@ static int	is_dead(t_frame *frame, t_philo *philo, long int now, int lock)
 		pthread_mutex_unlock(frame->dead);
 		return (1);
 	}
-	if (now - philo->last_ate >= frame->setup[DIE])
+	if (_get_time() - philo->last_ate >= frame->setup[DIE])
 	{	
-		now = _get_time();
-		print_info(frame, philo->id, now, PHILO_DIED);
+		print_info(frame, philo->id, PHILO_DIED);
 		frame->stop = 1;
 		if (lock >= 1)
 			pthread_mutex_unlock(philo->l_fork);
@@ -95,27 +92,19 @@ static int	is_dead(t_frame *frame, t_philo *philo, long int now, int lock)
 
 void	eat_with_forks(t_frame *frame, t_philo *philo)
 {
-	long int		now;
-
 	pthread_mutex_lock(philo->l_fork);
-	now = _get_time();
-	if (is_dead(frame, philo, now, 1))
+	if (is_dead(frame, philo, 1))
 		return ;
-	now = _get_time();
-	print_info(frame, philo->id, now, PHILO_TAKES_FORK);
+	print_info(frame, philo->id, PHILO_TAKES_FORK);
 	pthread_mutex_lock(philo->r_fork);
-	now = _get_time();
-	if (is_dead(frame, philo, now, 2))
+	if (is_dead(frame, philo, 2))
 		return ;
-	now = _get_time();
-	print_info(frame, philo->id, now, PHILO_TAKES_FORK);
-	now = _get_time();
-	if (is_dead(frame, philo, now, 2))
+	print_info(frame, philo->id, PHILO_TAKES_FORK);
+	if (is_dead(frame, philo, 2))
 		return ;
-	now = _get_time();
-	print_info(frame, philo->id, now, PHILO_EATS);
-	philo->last_ate = now;
-	if (dead_eating(frame, philo, now))
+	print_info(frame, philo->id, PHILO_EATS);
+	philo->last_ate = _get_time();
+	if (dead_eating(frame, philo))
 		return ;
 	ft_sleep(frame->setup[EAT]);
 	pthread_mutex_unlock(philo->l_fork);
@@ -124,15 +113,12 @@ void	eat_with_forks(t_frame *frame, t_philo *philo)
 
 void	sleep_and_think(t_frame *frame, t_philo *philo)
 {
-	long int	now;
 
-	now = _get_time();
-	print_info(frame, philo->id, now, PHILO_SLEEPS);
-	if (dead_sleeping(frame, philo, now))
+	print_info(frame, philo->id, PHILO_SLEEPS);
+	if (dead_sleeping(frame, philo))
 		return ;
 	ft_sleep(frame->setup[SLEEP]);
-	now = _get_time();
-	print_info(frame, philo->id, now, PHILO_THINKS);
-	if (is_dead(frame, philo, now, 0))
+	print_info(frame, philo->id, PHILO_THINKS);
+	if (is_dead(frame, philo, 0))
 		return ;
 }

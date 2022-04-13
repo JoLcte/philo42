@@ -93,7 +93,7 @@ int			parse(int nb_args, char **args, int *setup);
 void		eat_with_forks(t_frame *frame, t_philo *philo);
 void		fill_colors(int *arr, int size);
 void		ft_sleep(long int ms);
-void		print_info(t_frame *frame, int id, long int now, char *msg);
+void		print_info(t_frame *frame, int id, char *msg);
 void		sleep_and_think(t_frame *frame, t_philo *philo);
 void		thread_actions(t_frame *frame);
 long int	_get_time(void);

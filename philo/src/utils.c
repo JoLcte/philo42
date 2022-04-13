@@ -64,9 +64,10 @@ void	fill_colors(int *arr, int size)
 	}
 }
 
-void	print_info(t_frame *frame, int id, long int now, char *msg)
+void	print_info(t_frame *frame, int id, char *msg)
 {
 	const unsigned int	color = frame->palette[id % 36];
+	long int		now;
 
 	pthread_mutex_lock(frame->print);
 	if (frame->stop)
@@ -74,6 +75,7 @@ void	print_info(t_frame *frame, int id, long int now, char *msg)
 		pthread_mutex_unlock(frame->print);
 		return ;
 	}
+	now = _get_time();
 	printf(msg, color, now - frame->start, id);
 	pthread_mutex_unlock(frame->print);
 }
@@ -82,7 +84,7 @@ void	ft_sleep(long int ms)
 {
 	long int	now;
 
-	now = _get_time();
-	while (_get_time() < now + ms)
-		usleep(ms);
+ 	now = _get_time();
+ 	while (_get_time() < now + ms)
+ 		usleep(ms);
 }
