@@ -113,7 +113,6 @@ void	eat_with_forks(t_frame *frame, t_philo *philo)
 
 void	sleep_and_think(t_frame *frame, t_philo *philo)
 {
-
 	print_info(frame, philo->id, PHILO_SLEEPS);
 	if (dead_sleeping(frame, philo))
 		return ;
