@@ -17,18 +17,18 @@ INC = includes
 CC = gcc
 CFLAGS = -Werror -Wall -Wextra -I$(INC)
 
-LIBS = -lpthread
+LIBS = 
 
 SRC_DIR = src
 OBJ_DIR = obj
 
 SRC :=	$(SRC_DIR)/action.c \
-	$(SRC_DIR)/debug.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/parse.c \
 	$(SRC_DIR)/thread_handle.c \
 	$(SRC_DIR)/utils.c \
 	$(SRC_DIR)/main.c
+	#$(SRC_DIR)/debug.c \
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
