@@ -58,7 +58,7 @@ Error: memory could not be allocated.\e[m\n"
 # define PHILO_THINKS		"\e[38;5;%dm%ld	Philo %d is thinking\e[m\n"
 # define PHILO_DIED		"\e[38;5;%dm%ld	Philo %d died\e[m\n"
 # define END_MEALS		"\e[38;5;193mAll philosophers have eaten \
-%d meal(s).\e[m\n"
+at least %d meal(s).\e[m\n"
 
 /*
 **	--- DATA STRUCTURES ---

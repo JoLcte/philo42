@@ -48,11 +48,13 @@ void	*check_meals(void *data)
 		return (NULL);
 	while (n)
 	{
+	//	printf("on va la\n");
 		sem_wait(frame->philo_full);
 		usleep(10000);
 		if (frame->dead)
 			return (NULL);
 		n--;
+	//	printf("on va bien la et n = %d\n", n);
 	}
 	frame->wait_meals = 1;
 	sem_post(frame->stop);

@@ -75,7 +75,6 @@ static void	launch_meals_routine(t_frame *frame)
 			pthread_detach(frame->check_death);
 			meals_routine(frame, &frame->philo[i]);
 		}
-		++i;
 	}
 	sem_wait(frame->stop);
 }
