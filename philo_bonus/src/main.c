@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 18:08:39 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:09:04 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	clean_all(t_frame *frame)
 	int	status;
 
 	status = 0;
-	i = 0;
+	i = -1;
 	frame->dead = 1;
 	if (frame->wait_meals)
 	{
@@ -28,8 +28,8 @@ static void	clean_all(t_frame *frame)
 	}
 	else
 	{
-		while (i < frame->setup[NB_PHILO])
-			kill(frame->philo[i++].pid, SIGKILL);
+		while (++i < frame->setup[NB_PHILO])
+			kill(frame->philo[i].pid, SIGKILL);
 	}
 	usleep(10000);
 	free(frame->philo);
@@ -120,5 +120,9 @@ int	main(int ac, char **av)
 	else
 		launch_routine(&frame);
 	clean_all(&frame);
+	sem_unlink("forks");
+	sem_unlink("stop");
+	sem_unlink("print");
+	sem_unlink("philo_full");
 	return (0);
 }

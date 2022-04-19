@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 17:46:58 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:13:23 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_frame
 	sem_t			*forks;
 	sem_t			*philo_full;
 	sem_t			*print;
+	sem_t			*check;
 	t_philo			*philo;
 	long int		start;
 	int				setup[5];

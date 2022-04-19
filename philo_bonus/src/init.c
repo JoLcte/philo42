@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 17:48:04 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:18:54 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,16 @@ static int	init_sem(t_frame *frame)
 	sem_unlink("forks");
 	sem_unlink("stop");
 	sem_unlink("print");
-	sem_unlink("died");
-	frame->philo_full = NULL;
-	frame->forks = NULL;
-	frame->stop = NULL;
-	frame->print = NULL;
+	sem_unlink("check");
 	frame->philo_full = sem_open("philo_full", O_CREAT | O_EXCL, 0644, 1);
-	if (frame->philo_full == SEM_FAILED)
-		return (1);
 	frame->forks = sem_open("forks", O_CREAT | O_EXCL, 0644, \
 			frame->setup[NB_PHILO]);
-	if (frame->forks == SEM_FAILED)
-		return (1);
 	frame->stop = sem_open("stop", O_CREAT | O_EXCL, 0644, 0);
-	if (frame->stop == SEM_FAILED)
-		return (1);
 	frame->print = sem_open("print", O_CREAT | O_EXCL, 0644, 1);
-	if (frame->print == SEM_FAILED)
+	frame->check = sem_open("check", O_CREAT | O_EXCL, 0644, 1);
+	if (frame->philo_full == SEM_FAILED || frame->forks == SEM_FAILED
+		|| frame->stop == SEM_FAILED || frame->print == SEM_FAILED
+		|| frame->check == SEM_FAILED)
 		return (1);
 	return (0);
 }

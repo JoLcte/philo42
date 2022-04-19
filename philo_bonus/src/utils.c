@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 17:41:20 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:31:29 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,12 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 {
 	const unsigned int	color = frame->palette[id % 36];
 	long int			now;
-	static int			i;
 
-	if (i)
-		return ;
 	sem_wait(frame->print);
 	now = _get_time();
 	printf(msg, color, now - frame->start, id);
 	if (dead)
-		++i;
+		return ;
 	else
 		sem_post(frame->print);
 }

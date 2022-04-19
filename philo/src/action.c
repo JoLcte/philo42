@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/05 14:44:11 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:49:39 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	dead_sleeping(t_frame *frame, t_philo *philo)
 	{
 		pthread_mutex_unlock(frame->dead);
 		ft_sleep(frame->setup[DIE] - alive);
-		pthread_mutex_lock(frame->dead);
 		print_info(frame, philo->id, PHILO_DIED);
+		pthread_mutex_lock(frame->dead);
 		frame->stop = 1;
 		pthread_mutex_unlock(frame->dead);
 		return (1);
@@ -51,8 +51,8 @@ static int	dead_eating(t_frame *frame, t_philo *philo)
 	{	
 		pthread_mutex_unlock(frame->dead);
 		ft_sleep(frame->setup[DIE]);
-		pthread_mutex_lock(frame->dead);
 		print_info(frame, philo->id, PHILO_DIED);
+		pthread_mutex_lock(frame->dead);
 		frame->stop = 1;
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
@@ -77,7 +77,9 @@ static int	is_dead(t_frame *frame, t_philo *philo, int lock)
 	}
 	if (_get_time() - philo->last_ate >= frame->setup[DIE])
 	{	
+		pthread_mutex_unlock(frame->dead);
 		print_info(frame, philo->id, PHILO_DIED);
+		pthread_mutex_lock(frame->dead);
 		frame->stop = 1;
 		if (lock >= 1)
 			pthread_mutex_unlock(philo->l_fork);

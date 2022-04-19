@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/06 18:02:48 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:16:13 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ void	*check_death(void *data)
 	frame = philo->frame;
 	while (1)
 	{
+		sem_wait(frame->check);
 		if (frame->dead)
 			return (NULL);
+		sem_post(frame->check);
 		usleep(1000);
 		now = _get_time();
+		sem_wait(frame->check);
 		if (now - philo->last_ate >= frame->setup[DIE])
 		{
+			sem_post(frame->check);
 			print_info(frame, philo->id, PHILO_DIED, 1);
 			sem_post(frame->stop);
-			sem_post(frame->philo_full);
 			return (NULL);
 		}
+		sem_post(frame->check);
 	}
 	return (NULL);
 }
@@ -61,23 +65,27 @@ void	*check_meals(void *data)
 
 void	meals_routine(t_frame *frame, t_philo *philo)
 {
+	sem_wait(frame->check);
 	philo->last_ate = _get_time();
+	sem_post(frame->check);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
 		++philo->nb_meals;
-		sleep_and_think(frame, philo);
 		if (philo->nb_meals == frame->setup[MEALS])
 		{	
 			sem_post(frame->philo_full);
 			exit(0);
 		}
+		sleep_and_think(frame, philo);
 	}
 }
 
 void	routine(t_frame *frame, t_philo *philo)
 {
+	sem_wait(frame->check);
 	philo->last_ate = _get_time();
+	sem_post(frame->check);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
