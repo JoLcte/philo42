@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/17 10:13:14 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:10:47 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ static void	clean_all(t_frame *frame)
 			printf("couldn't destroy forks[%d]\n", i);
 		++i;
 	}
-	pthread_mutex_destroy(frame->print);
-	pthread_mutex_destroy(frame->dead);
-	free(frame->print);
-	free(frame->dead);
+	pthread_mutex_destroy(frame->lock);
+	free(frame->lock);
 	free(frame->philo);
 	free(frame->forks);
 }

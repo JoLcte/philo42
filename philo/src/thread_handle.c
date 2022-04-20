@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/19 17:30:09 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:01:58 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ static int	check_meals(t_frame *frame, t_philo *philo)
 {
 	if (philo->nb_meals == frame->setup[MEALS])
 	{
-		pthread_mutex_lock(frame->dead);
+		pthread_mutex_lock(frame->lock);
 		++frame->philos_full;
 		if (frame->philos_full == frame->setup[NB_PHILO])
 		{
 			frame->stop = 1;
-			pthread_mutex_unlock(frame->dead);
+			pthread_mutex_unlock(frame->lock);
 			return (1);
 		}
-		pthread_mutex_unlock(frame->dead);
+		pthread_mutex_unlock(frame->lock);
 		return (0);
 	}
 	return (0);
@@ -32,13 +32,13 @@ static int	check_meals(t_frame *frame, t_philo *philo)
 
 static int	stop_all(t_frame *frame)
 {
-	pthread_mutex_lock(frame->dead);
+	pthread_mutex_lock(frame->lock);
 	if (frame->stop)
 	{
-		pthread_mutex_unlock(frame->dead);
+		pthread_mutex_unlock(frame->lock);
 		return (1);
 	}
-	pthread_mutex_unlock(frame->dead);
+	pthread_mutex_unlock(frame->lock);
 	return (0);
 }
 

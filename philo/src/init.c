@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/17 01:19:35 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:10:36 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,11 @@ static int	init_mutex(t_frame *frame)
 	const int	nb_philo = frame->setup[NB_PHILO];
 	int			i;
 
-	frame->dead = malloc(sizeof(pthread_mutex_t));
-	if (!frame->dead)
-		return (error_exit(frame, MALLOC_ERR));
-	frame->print = malloc(sizeof(pthread_mutex_t));
-	if (!frame->print)
-		return (error_exit(frame, MALLOC_ERR));
+	frame->lock = malloc(sizeof(pthread_mutex_t));
 	frame->forks = malloc(sizeof(pthread_mutex_t) * nb_philo);
-	if (!frame->forks)
+	if (!frame->forks || !frame->lock)
 		return (error_exit(frame, MALLOC_ERR));
-	if (pthread_mutex_init(frame->print, NULL))
-		return (error_exit(frame, MUTEX_ERR));
-	if (pthread_mutex_init(frame->dead, NULL))
+	if (pthread_mutex_init(frame->lock, NULL))
 		return (error_exit(frame, MUTEX_ERR));
 	i = 0;
 	while (i < nb_philo)
@@ -87,12 +80,10 @@ static int	one_philo(t_frame *frame)
 	usleep(frame->setup[DIE] * 1000);
 	printf(PHILO_DIED, frame->palette[0], (long int)frame->setup[DIE], 1);
 	pthread_mutex_destroy(&frame->forks[0]);
-	pthread_mutex_destroy(frame->print);
-	pthread_mutex_destroy(frame->dead);
-	free(frame->print);
-	free(frame->dead);
-	free(frame->philo);
+	pthread_mutex_destroy(frame->lock);
+	free(frame->lock);
 	free(frame->forks);
+	free(frame->philo);
 	return (1);
 }
 

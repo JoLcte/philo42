@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/19 17:50:57 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/20 20:59:55 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,14 @@ void	print_info(t_frame *frame, int id, char *msg)
 	const unsigned int	color = frame->palette[id % 36];
 	long int			now;
 
-	pthread_mutex_lock(frame->dead);
 	if (frame->stop)
 	{
-		pthread_mutex_unlock(frame->dead);
+		pthread_mutex_unlock(frame->lock);
 		return ;
 	}
-	pthread_mutex_unlock(frame->dead);
-	pthread_mutex_lock(frame->print);
 	now = _get_time();
 	printf(msg, color, now - frame->start, id);
-	pthread_mutex_unlock(frame->print);
+	pthread_mutex_unlock(frame->lock);
 }
 
 void	ft_sleep(long int ms)
