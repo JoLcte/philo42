@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/20 21:10:36 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:34:23 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static int	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
 	philo[i].id = i + 1;
 	philo[i].nb_meals = 0;
 	philo[i].last_ate = _get_time();
-	philo[i].l_fork = &frame->forks[i];
-	philo[i].r_fork = &frame->forks[0];
+	philo[i].l_fork = &frame->forks[0];
+	philo[i].r_fork = &frame->forks[i];
 	philo[i].frame = frame;
 	return (0);
 }
