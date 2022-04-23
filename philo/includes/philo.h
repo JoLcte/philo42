@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/22 16:04:15 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:54:31 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,19 @@ typedef struct s_frame
 **	--- MAIN FUNCTIONS ---
 */
 
+int			check_meals(t_frame *frame, t_philo *philo);
 int			error_exit(t_frame *frame, const char *s);
 int			init_data(t_frame *frame);
 int			parse(int nb_args, char **args, int *setup);
+int			print_info(t_frame *frame, int id, char *msg, int dead);
+int			stop_all(t_frame *frame);
 void		eat_with_forks(t_frame *frame, t_philo *philo);
 void		fill_colors(int *arr, int size);
 void		ft_sleep(long int ms);
-int			print_info(t_frame *frame, int id, char *msg, int dead);
 void		sleep_and_think(t_frame *frame, t_philo *philo);
 void		thread_actions(t_frame *frame);
+void		*meals_routine(void *data);
+void		*routine(void *data);
 long int	_get_time(void);
 
 /*
