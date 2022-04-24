@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/19 17:16:13 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 18:40:49 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	meals_routine(t_frame *frame, t_philo *philo)
 		if (philo->nb_meals == frame->setup[MEALS])
 		{	
 			sem_post(frame->philo_full);
+			free(frame->philos);
 			exit(0);
 		}
 		sleep_and_think(frame, philo);
