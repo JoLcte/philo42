@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 17:27:29 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:03:38 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,13 @@ int	stop_all(t_frame *frame, t_philo *philo)
 			pthread_mutex_unlock(philo->r_fork);
 		}
 		else if (philo->locks == 1)
-			pthread_mutex_unlock(philo->l_fork);
+		{
+			if (philo->id % 2 == 0)
+				pthread_mutex_unlock(philo->r_fork);
+			else
+				pthread_mutex_unlock(philo->l_fork);
+
+		}
 		return (1);
 	}
 	pthread_mutex_unlock(frame->lock);

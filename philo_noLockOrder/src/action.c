@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 17:28:56 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:04:34 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	eat_with_forks(t_frame *frame, t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork);
+	if (philo->id % 2 == 0)
+		pthread_mutex_lock(philo->r_fork);
+	else
+		pthread_mutex_lock(philo->l_fork);
 	philo->locks = 1;
 	pthread_mutex_lock(frame->lock);
 	if (print_info(frame, philo->id, PHILO_TAKES_FORK, 0))
 		return ;
-	pthread_mutex_lock(philo->r_fork);
+	if (philo->id % 2 == 0)
+		pthread_mutex_lock(philo->l_fork);
+	else
+		pthread_mutex_lock(philo->r_fork);
 	philo->locks = 2;
 	pthread_mutex_lock(frame->lock);
 	if (print_info(frame, philo->id, PHILO_TAKES_FORK, 0))
@@ -31,9 +37,15 @@ void	eat_with_forks(t_frame *frame, t_philo *philo)
 	philo->last_ate = _get_time();
 	pthread_mutex_unlock(frame->lock);
 	ft_sleep(frame->setup[EAT]);
-	pthread_mutex_unlock(philo->l_fork);
+	if (philo->id % 2 == 0)
+		pthread_mutex_unlock(philo->l_fork);
+	else
+		pthread_mutex_unlock(philo->r_fork);
 	philo->locks = 1;
-	pthread_mutex_unlock(philo->r_fork);
+	if (philo->id % 2 == 0)
+		pthread_mutex_unlock(philo->r_fork);
+	else
+		pthread_mutex_unlock(philo->l_fork);
 	philo->locks = 0;
 }
 
@@ -55,8 +67,8 @@ void	*meals_routine(void *data)
 
 	philo = (t_philo *)data;
 	frame = philo->frame;
-	if (philo->id % 2 == 0)
-		ft_sleep(frame->setup[EAT] / 2);
+	if (philo->id > 1)
+		usleep(1000);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
@@ -84,8 +96,8 @@ void	*routine(void *data)
 	pthread_mutex_lock(frame->lock);
 	philo->last_ate = _get_time();
 	pthread_mutex_unlock(frame->lock);
-	if (philo->id % 2 == 0)
-		ft_sleep(frame->setup[EAT] / 2);
+	if (philo->id > 1)
+		usleep(1000);
 	while (1)
 	{
 		eat_with_forks(frame, philo);
