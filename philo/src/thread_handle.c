@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 17:27:29 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 18:52:57 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,22 @@ int	check_meals(t_frame *frame, t_philo *philo)
 	return (0);
 }
 
-int	stop_all(t_frame *frame, t_philo *philo)
+int	stop_all(t_frame *frame, t_philo *philo, int check)
 {
 	pthread_mutex_lock(frame->lock);
 	if (frame->stop)
 	{
 		pthread_mutex_unlock(frame->lock);
-		if (philo->locks == 2)
+		if (check)
 		{
-			pthread_mutex_unlock(philo->l_fork);
-			pthread_mutex_unlock(philo->r_fork);
+			if (philo->locks == 2)
+			{
+				pthread_mutex_unlock(philo->l_fork);
+				pthread_mutex_unlock(philo->r_fork);
+			}
+			else if (philo->locks == 1)
+				pthread_mutex_unlock(philo->l_fork);
 		}
-		else if (philo->locks == 1)
-			pthread_mutex_unlock(philo->l_fork);
 		return (1);
 	}
 	pthread_mutex_unlock(frame->lock);
@@ -56,21 +59,12 @@ static void	is_dead(t_frame *frame)
 	while (1)
 	{
 		i = 0;
-		pthread_mutex_lock(frame->lock);
-		if (frame->stop)
-		{
-			pthread_mutex_unlock(frame->lock);
+		if (stop_all(frame, frame->philo, 0))
 			return ;
-		}
-		pthread_mutex_unlock(frame->lock);
 		while (i < frame->setup[NB_PHILO])
 		{
-			pthread_mutex_lock(frame->lock);
-			if (frame->stop)
-			{
-				pthread_mutex_unlock(frame->lock);
+			if (stop_all(frame, frame->philo, 0))
 				return ;
-			}
 			if (_get_time() - frame->philo[i].last_ate >= frame->setup[DIE])
 			{
 				print_info(frame, frame->philo[i].id, PHILO_DIED, 1);

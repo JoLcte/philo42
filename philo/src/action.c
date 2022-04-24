@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 17:28:56 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 18:54:41 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ void	*meals_routine(void *data)
 	while (1)
 	{
 		eat_with_forks(frame, philo);
-		if (stop_all(frame, philo))
+		if (stop_all(frame, philo, 1))
 			break ;
 		++philo->nb_meals;
 		if (check_meals(frame, philo))
 			break ;
-		if (stop_all(frame, philo))
+		if (stop_all(frame, philo, 1))
 			break ;
 		sleep_and_think(frame, philo);
-		if (stop_all(frame, philo))
+		if (stop_all(frame, philo, 1))
 			break ;
 	}
 	return (NULL);
@@ -89,10 +89,10 @@ void	*routine(void *data)
 	while (1)
 	{
 		eat_with_forks(frame, philo);
-		if (stop_all(frame, philo))
+		if (stop_all(frame, philo, 1))
 			break ;
 		sleep_and_think(frame, philo);
-		if (stop_all(frame, philo))
+		if (stop_all(frame, philo, 1))
 			break ;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 16:33:10 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/24 18:53:30 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			error_exit(t_frame *frame, const char *s);
 int			init_data(t_frame *frame);
 int			parse(int nb_args, char **args, int *setup);
 int			print_info(t_frame *frame, int id, char *msg, int dead);
-int			stop_all(t_frame *frame, t_philo *philo);
+int			stop_all(t_frame *frame, t_philo *philo, int check);
 void		eat_with_forks(t_frame *frame, t_philo *philo);
 void		fill_colors(int *arr, int size);
 void		ft_sleep(long int ms);
