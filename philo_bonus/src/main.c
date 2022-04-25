@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 18:41:58 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:15:33 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	clean_all(t_frame *frame)
 	sem_close(frame->stop);
 	sem_close(frame->print);
 	sem_close(frame->philo_full);
+	sem_close(frame->check);
 }
 
 static int	fork_err(t_frame *frame, int i)
@@ -123,6 +124,7 @@ int	main(int ac, char **av)
 	sem_unlink("forks");
 	sem_unlink("stop");
 	sem_unlink("print");
+	sem_unlink("check");
 	sem_unlink("philo_full");
 	return (0);
 }

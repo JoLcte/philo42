@@ -6,11 +6,24 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 18:40:49 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:14:21 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static void	exit_clean(t_frame *frame)
+{
+	printf("coucou\n");
+	usleep(1000000);
+	free(frame->philo);
+	sem_close(frame->forks);
+	sem_close(frame->print);
+	sem_close(frame->philo_full);
+	sem_close(frame->check);
+	sem_close(frame->stop);
+	exit(0);
+}
 
 void	*check_death(void *data)
 {
@@ -54,8 +67,9 @@ void	*check_meals(void *data)
 	{
 		sem_wait(frame->philo_full);
 		usleep(10000);
-		if (frame->dead)
-			return (NULL);
+		if (frame->dead){
+			printf("coucou\n");
+			return (NULL);}
 		n--;
 	}
 	frame->wait_meals = 1;
@@ -75,8 +89,7 @@ void	meals_routine(t_frame *frame, t_philo *philo)
 		if (philo->nb_meals == frame->setup[MEALS])
 		{	
 			sem_post(frame->philo_full);
-			free(frame->philos);
-			exit(0);
+			exit_clean(frame);
 		}
 		sleep_and_think(frame, philo);
 	}
