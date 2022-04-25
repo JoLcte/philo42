@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:05:07 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 18:54:41 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:20:11 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	*meals_routine(void *data)
 
 	philo = (t_philo *)data;
 	frame = philo->frame;
+	pthread_mutex_lock(frame->lock);
+	philo->last_ate = _get_time();
+	pthread_mutex_unlock(frame->lock);
 	if (philo->id % 2 == 0)
 		ft_sleep(frame->setup[EAT] / 2);
 	while (1)

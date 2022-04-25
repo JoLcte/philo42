@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/24 18:52:57 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:20:38 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	is_dead(t_frame *frame)
 		{
 			if (stop_all(frame, frame->philo, 0))
 				return ;
+			pthread_mutex_lock(frame->lock);
 			if (_get_time() - frame->philo[i].last_ate >= frame->setup[DIE])
 			{
 				print_info(frame, frame->philo[i].id, PHILO_DIED, 1);
