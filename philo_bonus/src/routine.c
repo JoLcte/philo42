@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/25 16:14:21 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:24:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	exit_clean(t_frame *frame)
 {
-	printf("coucou\n");
 	usleep(1000000);
 	free(frame->philo);
 	sem_close(frame->forks);

@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/25 16:15:33 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:23:31 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	clean_all(t_frame *frame)
 	status = 0;
 	i = -1;
 	frame->dead = 1;
+	sem_post(frame->philo_full);
 	if (frame->wait_meals)
 	{
 		while (++i < frame->setup[NB_PHILO])
