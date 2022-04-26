@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/25 16:24:08 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:53:54 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	exit_clean(t_frame *frame)
 {
-	usleep(1000000);
+	sem_post(frame->philo_full);
+	usleep(10000);
 	free(frame->philo);
 	sem_close(frame->forks);
 	sem_close(frame->print);
@@ -66,9 +67,13 @@ void	*check_meals(void *data)
 	{
 		sem_wait(frame->philo_full);
 		usleep(10000);
-		if (frame->dead){
-			printf("coucou\n");
-			return (NULL);}
+		sem_wait(frame->check);
+		if (frame->dead)
+		{
+			sem_post(frame->check);
+			return (NULL);
+		}
+		sem_post(frame->check);
 		n--;
 	}
 	frame->wait_meals = 1;
@@ -86,10 +91,7 @@ void	meals_routine(t_frame *frame, t_philo *philo)
 		eat_with_forks(frame, philo);
 		++philo->nb_meals;
 		if (philo->nb_meals == frame->setup[MEALS])
-		{	
-			sem_post(frame->philo_full);
 			exit_clean(frame);
-		}
 		sleep_and_think(frame, philo);
 	}
 }
