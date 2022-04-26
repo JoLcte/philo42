@@ -1,0 +1,13 @@
+***** 			TO BE DISCUSSED 		*****
+
+- no leaks in children processes in routine
+'---> but leaks in children processes in meals_routine because of a thread (check_death possible)
+
+- after a bug correction, now the main in meals_routine waits a philo to die even if they've all eaten before.
+==> FIXED bc usleep was too long in exit_clean (routine.c)
+
+- data race possible with frane->dead but not with frame->check_meals : why ?
+
+- should we use only one semaphore check like frame->lock in mandatory part ?
+
+***** 			------------- 			*****
