@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:23:12 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/26 10:50:58 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/03 21:09:19 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_data(&frame))
 		return (1);
-	if (frame.setup[MEALS] >= 0)
+	if (frame.setup[MEALS] > 0)
 		launch_meals_routine(&frame);
 	else
 		launch_routine(&frame);

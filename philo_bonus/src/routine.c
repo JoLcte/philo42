@@ -6,16 +6,14 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/26 10:53:54 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/03 21:09:40 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	exit_clean(t_frame *frame)
+static void	clean_exit(t_frame *frame)
 {
-	sem_post(frame->philo_full);
-	usleep(10000);
 	free(frame->philo);
 	sem_close(frame->forks);
 	sem_close(frame->print);
@@ -44,6 +42,8 @@ void	*check_death(void *data)
 		sem_wait(frame->check);
 		if (now - philo->last_ate >= frame->setup[DIE])
 		{
+			if (frame->setup[MEALS] > 0)
+				sem_post(frame->philo_full);
 			sem_post(frame->check);
 			print_info(frame, philo->id, PHILO_DIED, 1);
 			sem_post(frame->stop);
@@ -58,25 +58,26 @@ void	*check_meals(void *data)
 {
 	t_frame	*frame;
 	int		n;
+	int		i;
+	int		count;
 
 	frame = (t_frame *)data;
 	n = frame->setup[NB_PHILO];
 	if (n == 1)
 		return (NULL);
-	while (n)
+	count = 0;
+	while (count < frame->setup[MEALS])
 	{
-		sem_wait(frame->philo_full);
-		usleep(10000);
-		sem_wait(frame->check);
-		if (frame->dead)
+		i = 0;
+		while (i < frame->setup[NB_PHILO])
 		{
-			sem_post(frame->check);
-			return (NULL);
+			sem_wait(frame->philo[i].meals_eaten);
+			++i;
 		}
-		sem_post(frame->check);
-		n--;
+		++count;
 	}
 	frame->wait_meals = 1;
+	usleep(10000);
 	sem_post(frame->stop);
 	return (NULL);
 }
@@ -90,8 +91,9 @@ void	meals_routine(t_frame *frame, t_philo *philo)
 	{
 		eat_with_forks(frame, philo);
 		++philo->nb_meals;
+		sem_post(philo->meals_eaten);
 		if (philo->nb_meals == frame->setup[MEALS])
-			exit_clean(frame);
+			clean_exit(frame);
 		sleep_and_think(frame, philo);
 	}
 }

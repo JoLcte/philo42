@@ -6,19 +6,40 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/19 17:18:54 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:22:49 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
+static	void	ft_itoa(int id, char *s)
 {
 	int	i;
+
+	i = 3;
+
+	s[i] = '\0';
+	while (--i >= 0)
+	{
+		s[i] = id % 10 + '0';
+		id /= 10;
+	}
+}
+
+static int	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
+{
+	int		i;
+	char	sem_name[4];
 
 	i = 0;
 	while (i < nb_philo)
 	{
+		ft_itoa(i + 1, sem_name);
+		sem_unlink(sem_name);
+		philo[i].meals_eaten = sem_open(sem_name, O_CREAT | O_EXCL, \
+				0644, 0);
+		if (philo[i].meals_eaten == SEM_FAILED)
+			return (1);
 		philo[i].frame = frame;
 		philo[i].id = i + 1;
 		philo[i].nb_meals = 0;
@@ -26,6 +47,7 @@ static void	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
 		philo[i].pid = -1;
 		++i;
 	}
+	return (0);
 }
 
 static int	init_sem(t_frame *frame)
@@ -57,9 +79,8 @@ int	init_data(t_frame *frame)
 		return (error_exit(frame, MALLOC_ERR));
 	frame->check_death = 0;
 	frame->check_meals = 0;
-	if (init_sem(frame))
+	if (init_sem(frame) || init_philos(frame, frame->philo, nb_philo))
 		return (error_exit(frame, SEM_ERR));
-	init_philos(frame, frame->philo, nb_philo);
 	fill_colors(frame->palette, 36);
 	frame->start = 0;
 	frame->dead = 0;

@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/04/19 15:31:29 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/03 21:07:26 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,83 @@ void	fill_colors(int *arr, int size)
 	}
 }
 
+/*static	int	ft_itoa(long int n, char *s)
+{
+	long int	n_save;
+	int		ret;
+	int		i;
+
+	if (!n)
+	{
+		s[0] = '0';
+		s[1] = '\0';
+		return (1);
+	}
+	i = 0;
+	n_save = n;
+	while (n)
+	{
+		n /= 10;
+		++i;
+	}
+	ret = i;
+	s[i] = '\0';
+	while (--i >= 0)
+	{
+		s[i] = n_save % 10 + '0';
+		n_save /= 10;
+	}
+	return (ret);
+}*/
+
+/*void	add_buff(char *s, int size, int print)
+{
+	char buff[64];
+	static int	idx_save;
+	int		i;
+	
+	i = 0;
+	while (i < size)
+	{
+		buff[idx_save + i] = s[i];
+		++i;
+	}
+	idx_save += size;
+	if (print)
+	{
+		buff[idx_save] = '\0';
+		write(1, buff, idx_save);
+		idx_save = 0;
+	}
+}*/
+
 void	print_info(t_frame *frame, int id, char *msg, int dead)
 {
 	const unsigned int	color = frame->palette[id % 36];
+	//char			s[11];
 	long int			now;
+	//int			ret;
 
 	sem_wait(frame->print);
 	now = _get_time();
-	printf(msg, color, now - frame->start, id);
+	/*add_buff("\e[38;5;45m", 10, 0);
+	ret = ft_itoa(now - frame->start, s);
+	add_buff(s, ret, 0);
+	add_buff("\t", 1, 0);
+	add_buff("Philo ", 6, 0);
+	ret = ft_itoa(id, s);
+	add_buff(s, ret, 0);
+	if (msg == EATS)
+		add_buff(" is eating\e[m\n", 14, 1);
+	else if (msg == FORK)
+		add_buff(" has taken a fork\e[m\n", 21, 1);
+	else if (msg == SLEEPS)
+		add_buff(" is sleeping\e[m\n", 16, 1);
+	else if (msg == THINKS)
+		add_buff(" is thinking\e[m\n", 16, 1);
+	else if (msg == DIED)
+		add_buff(" died\e[m\n", 9, 1);*/
+	printf(msg, color, now - frame->start, id); 
 	if (dead)
 		return ;
 	else

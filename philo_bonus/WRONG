@@ -11,3 +11,6 @@
 - should we use only one semaphore check like frame->lock in mandatory part ?
 
 ***** 			------------- 			*****
+
+TO DO :
+- try w/o frame->dead = 1 what changes

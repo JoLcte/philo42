@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:31:36 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/03/17 01:29:33 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:22:26 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static int	fake_atoui(char const *str)
 		c = (unsigned)*str++ - '0';
 		if (c > 9)
 			return (print_error(WRONG_VAL, 72));
-		if (n > INT32_MAX)
-			return (print_error(TOO_BIG, 76));
 		n = (n << 1) + (n << 3) + c;
 	}
+	if (n > 999)
+		return (print_error(TOO_BIG, 74));
 	if (!n)
 		return (print_error(NO_ZERO, 68));
 	return ((int)n);
