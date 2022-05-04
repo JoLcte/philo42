@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 18:56:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/05/03 21:09:40 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:51:45 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	*check_death(void *data)
 			if (frame->setup[MEALS] > 0)
 				sem_post(frame->philo_full);
 			sem_post(frame->check);
-			print_info(frame, philo->id, PHILO_DIED, 1);
+			//print_info(frame, philo->id, PHILO_DIED, 1);
+			print_info(frame, philo->id, DIED);
 			sem_post(frame->stop);
 			return (NULL);
 		}

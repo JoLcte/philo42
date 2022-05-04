@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:08:15 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/05/03 21:07:26 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:53:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fill_colors(int *arr, int size)
 	}
 }
 
-/*static	int	ft_itoa(long int n, char *s)
+static	int	ft_itoa(long int n, char *s)
 {
 	long int	n_save;
 	int		ret;
@@ -88,9 +88,9 @@ void	fill_colors(int *arr, int size)
 		n_save /= 10;
 	}
 	return (ret);
-}*/
+}
 
-/*void	add_buff(char *s, int size, int print)
+void	add_buff(char *s, int size, int print)
 {
 	char buff[64];
 	static int	idx_save;
@@ -109,18 +109,17 @@ void	fill_colors(int *arr, int size)
 		write(1, buff, idx_save);
 		idx_save = 0;
 	}
-}*/
+}
 
-void	print_info(t_frame *frame, int id, char *msg, int dead)
+void	print_info(t_frame *frame, int id, int msg)
 {
-	const unsigned int	color = frame->palette[id % 36];
-	//char			s[11];
-	long int			now;
-	//int			ret;
+	long int	now;
+	char		s[11];
+	int			ret;
 
 	sem_wait(frame->print);
 	now = _get_time();
-	/*add_buff("\e[38;5;45m", 10, 0);
+	add_buff("\e[38;5;45m", 10, 0);
 	ret = ft_itoa(now - frame->start, s);
 	add_buff(s, ret, 0);
 	add_buff("\t", 1, 0);
@@ -136,13 +135,26 @@ void	print_info(t_frame *frame, int id, char *msg, int dead)
 	else if (msg == THINKS)
 		add_buff(" is thinking\e[m\n", 16, 1);
 	else if (msg == DIED)
-		add_buff(" died\e[m\n", 9, 1);*/
+	{
+		add_buff(" died\e[m\n", 9, 1);
+		return ;
+	}
+	sem_post(frame->print);
+}
+
+/*void	print_info(t_frame *frame, int id, char *msg, int dead)
+{
+	const unsigned int	color = frame->palette[id % 36];
+	long int			now;
+
+	sem_wait(frame->print);
+	now = _get_time();
 	printf(msg, color, now - frame->start, id); 
 	if (dead)
 		return ;
 	else
 		sem_post(frame->print);
-}
+}*/
 
 void	ft_sleep(long int ms)
 {

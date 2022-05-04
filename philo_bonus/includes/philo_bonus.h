@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/05/03 21:05:37 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:51:14 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,16 @@ Error: process could not be forked.\e[m\n"
 Error: semaphore failed to open.\e[m\n"
 # define MALLOC_ERR		"\e[48;5;160m\
 Error: memory could not be allocated.\e[m\n"
-# define PHILO_EATS		"\e[38;5;%dm%ld	Philo %d is eating\e[m\n"
-# define PHILO_TAKES_FORK	"\e[38;5;%dm%ld	Philo %d has taken a fork\e[m\n"
-# define PHILO_SLEEPS		"\e[38;5;%dm%ld	Philo %d is sleeping\e[m\n"
-# define PHILO_THINKS		"\e[38;5;%dm%ld	Philo %d is thinking\e[m\n"
-# define PHILO_DIED		"\e[38;5;%dm%ld	Philo %d died\e[m\n"
+//# define PHILO_EATS		"\e[38;5;%dm%ld	Philo %d is eating\e[m\n"
+//# define PHILO_TAKES_FORK	"\e[38;5;%dm%ld	Philo %d has taken a fork\e[m\n"
+//# define PHILO_SLEEPS		"\e[38;5;%dm%ld	Philo %d is sleeping\e[m\n"
+//# define PHILO_THINKS		"\e[38;5;%dm%ld	Philo %d is thinking\e[m\n"
+//# define PHILO_DIED		"\e[38;5;%dm%ld	Philo %d died\e[m\n"
+# define EATS			0
+# define FORK			1
+# define THINKS			2
+# define SLEEPS			3
+# define DIED			4
 # define END_MEALS		"\e[38;5;193mAll philosophers have eaten \
 at least %d meal(s).\e[m\n"
 
@@ -107,7 +112,7 @@ void		eat_with_forks(t_frame *frame, t_philo *philo);
 void		fill_colors(int *arr, int size);
 void		ft_sleep(long int ms);
 void		meals_routine(t_frame *frame, t_philo *philo);
-void		print_info(t_frame *frame, int id, char *msg, int dead);
+void		print_info(t_frame *frame, int id, int msg);
 void		routine(t_frame *frame, t_philo *philo);
 void		sleep_and_think(t_frame *frame, t_philo *philo);
 long int	_get_time(void);
