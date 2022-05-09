@@ -6,11 +6,11 @@
 #    By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:33:43 by jlecomte          #+#    #+#              #
-#    Updated: 2022/04/06 17:40:45 by jlecomte         ###   ########.fr        #
+#    Updated: 2022/05/05 13:55:48 by jlecomte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 
 INC = includes
 
@@ -26,9 +26,10 @@ SRC :=	$(SRC_DIR)/action.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/routine.c \
 	$(SRC_DIR)/parse.c \
+	$(SRC_DIR)/print.c \
+	$(SRC_DIR)/threads.c \
 	$(SRC_DIR)/utils.c \
 	$(SRC_DIR)/main.c
-	#$(SRC_DIR)/debug.c \
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

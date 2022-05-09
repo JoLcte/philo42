@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:04:21 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/05/04 13:51:14 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:16:49 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 # ifndef INT32_MAX
@@ -52,11 +53,6 @@ Error: process could not be forked.\e[m\n"
 Error: semaphore failed to open.\e[m\n"
 # define MALLOC_ERR		"\e[48;5;160m\
 Error: memory could not be allocated.\e[m\n"
-//# define PHILO_EATS		"\e[38;5;%dm%ld	Philo %d is eating\e[m\n"
-//# define PHILO_TAKES_FORK	"\e[38;5;%dm%ld	Philo %d has taken a fork\e[m\n"
-//# define PHILO_SLEEPS		"\e[38;5;%dm%ld	Philo %d is sleeping\e[m\n"
-//# define PHILO_THINKS		"\e[38;5;%dm%ld	Philo %d is thinking\e[m\n"
-//# define PHILO_DIED		"\e[38;5;%dm%ld	Philo %d died\e[m\n"
 # define EATS			0
 # define FORK			1
 # define THINKS			2
@@ -91,6 +87,7 @@ typedef struct s_frame
 	sem_t			*print;
 	sem_t			*check;
 	t_philo			*philo;
+	char			*buff;
 	long int		start;
 	int				setup[5];
 	int				palette[36];
@@ -104,6 +101,7 @@ typedef struct s_frame
 */
 
 int			error_exit(t_frame *frame, const char *s);
+int			fork_err(t_frame *frame, int i);
 int			init_data(t_frame *frame);
 int			parse(int nb_args, char **args, int *setup);
 void		*check_death(void *data);
@@ -116,13 +114,5 @@ void		print_info(t_frame *frame, int id, int msg);
 void		routine(t_frame *frame, t_philo *philo);
 void		sleep_and_think(t_frame *frame, t_philo *philo);
 long int	_get_time(void);
-
-/*
-**	--- DEBUG ---
-*/
-
-//void		print_setup(int *setup, int size);
-//void		print_philos(t_frame *frame, t_philo *philo, int nb_philo);
-//void		print_frame(t_frame *frame);
 
 #endif

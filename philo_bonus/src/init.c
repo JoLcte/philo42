@@ -6,18 +6,17 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:34:34 by jlecomte          #+#    #+#             */
-/*   Updated: 2022/05/03 19:22:49 by jlecomte         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:18:22 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static	void	ft_itoa(int id, char *s)
+static	void	mini_ft_itoa(int id, char *s)
 {
 	int	i;
 
 	i = 3;
-
 	s[i] = '\0';
 	while (--i >= 0)
 	{
@@ -34,7 +33,7 @@ static int	init_philos(t_frame *frame, t_philo *philo, int nb_philo)
 	i = 0;
 	while (i < nb_philo)
 	{
-		ft_itoa(i + 1, sem_name);
+		mini_ft_itoa(i + 1, sem_name);
 		sem_unlink(sem_name);
 		philo[i].meals_eaten = sem_open(sem_name, O_CREAT | O_EXCL, \
 				0644, 0);
